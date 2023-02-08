@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
         const postData = await Post.findAll({ 
             include: {models:User, models:Comment}
         }) 
-        res.status(200).json(postData)
+        
     } catch (err) { 
         res.status(500).json(err)
     }
