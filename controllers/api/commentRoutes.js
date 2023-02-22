@@ -1,8 +1,8 @@
-const router = require('express').Router(); 
-const {Comment} = require('../../models'); 
-const withAuth = require('../utils/auth'); 
+const router = require("express").Router(); 
+const {Comment} = require("../../models"); 
+const withAuth = require("../../utils/auth"); 
 
-router.get('/', withAuth, async (req, res) => { 
+router.get("/", withAuth, async (req, res) => { 
     try { 
         const commentData = await Comment.findAll(); 
         res.json(commentData);
@@ -13,7 +13,7 @@ router.get('/', withAuth, async (req, res) => {
     }
 }) 
 
-router.get('/:id', async (req, res) => { 
+router.get("/:id", async (req, res) => { 
     try{ 
         const commentData = await Comment.findByPk(req.params.id) 
         res.status(200).json(commentData);
@@ -23,7 +23,7 @@ router.get('/:id', async (req, res) => {
     
 }); 
 
-router.post('/', withAuth, async (req, res) => { 
+router.post("/", withAuth, async (req, res) => { 
     try { 
         const commentPost = await Comment.create({ 
             ...req.body, 
@@ -38,7 +38,7 @@ router.post('/', withAuth, async (req, res) => {
     }
 }); 
 
-router.put('/:id', withAuth, async (req, res) => { 
+router.put("/:id", withAuth, async (req, res) => { 
     try { 
         const updateComment = await Comment.update({ 
             comment_text: req.body.comment_text,
@@ -49,7 +49,7 @@ router.put('/:id', withAuth, async (req, res) => {
     }
 }) 
 
-router.delete('/:id', withAuth, async (req, res) => { 
+router.delete("/:id", withAuth, async (req, res) => { 
     try { 
         const commentData = await Comment.destroy({ 
             where: { 
@@ -59,4 +59,6 @@ router.delete('/:id', withAuth, async (req, res) => {
     } catch (err) { 
         res.status(400).json(err); 
     }
-})
+}); 
+
+module.exports = router;
