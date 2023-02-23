@@ -52,9 +52,7 @@ router.get("/:id", async (req,res) => {
 
 router.post("/", withAuth, async (req, res) => { 
     try { 
-        if(!req.session.user) { 
-            return req.status(400).json({message: "Please login!"})
-        } 
+       
 
         const postData = await Post.create({ 
             ...req.body, 

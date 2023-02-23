@@ -24,24 +24,33 @@
     </form>
   </div>
   {{#if posts}}
-    <div class="col-md-6 post-list">
-      <h3>Current Posts:</h3>
-
+  <section>
+    <h2>Your Reviews</h2>
+    <ol>
       {{#each posts as |Post|}}
-        <div class="row mb-2">
-          <div class="col-md-8">
-            <h4><a href="/post/{{post.id}}">{{post.title}}</a></h4>
-          </div>
-          <div class="col-md-4">
-            <button
-              class="btn btn-sm btn-danger"
-              data-id="{{post.id}}"
-            >DELETE</button>
-          </div>
-        </div>
+        <article
+          style="border: 1px solid black; border-radius: 10px; background-color: rgb(233, 209, 177); font-size: 30px;"
+          class="review"
+        >
+          <header class="title">
+            <div>
+              <a href="/posts/{{id}}">{{Post.title}}</a>
+              <div>
+                Created
+                on
+                {{format_date Post.date_created}}</div>
+            </div>
+            <div class="content">
+              <p>{{post.post_content}}</p>
+            </div>
+            <button data-id="{{Post.id}}" id="del-butt">Delete</button>
+          </header>
+        </article>
       {{/each}}
-    </div>
-  {{/if}}
+    </ol>
+  </section>
+  
+{{/if}}
 </div>
 
 <script src="./js/post.js"></script>

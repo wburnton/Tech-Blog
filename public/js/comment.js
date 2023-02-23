@@ -3,14 +3,15 @@ async function commentHandler(event) {
 
      //find and associate variables with user assigned value given 
     //to comment_text
-    const comment_text = document.querySelector('#comment-body').value.trim();
+    const comment_text = document.querySelector("#comment-body").value;
 
     //get the post id from the url
-    const post_id = document.querySelector('.add-comment').dataset.postid;
+    const post_id = document.querySelector(".add-comment").dataset.postid.slice(0,1);
 //new comment created as a JSON object with post_id and comment_text
-if (comment_text) {
-    await fetch('/api/comments', {
-        method: 'POST',
+    console.log(post_id); 
+    console.log(comment_text);
+    const response = await fetch(`/api/comments`, {
+        method: "POST",
         body: JSON.stringify({
             post_id,
             comment_text,
@@ -19,8 +20,13 @@ if (comment_text) {
             'Content-Type': 'application/json'
         }
     });
-    document.location.reload();
-}
+    if (response.ok) {
+        document.location.reload();
+        console.log(response);
+      } else {
+        alert("Failed to create comment");
+      }
+
 };
 
 //listens for the submit button to be clicked to call commentFormHandler function
