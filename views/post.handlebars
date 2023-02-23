@@ -1,0 +1,16 @@
+<div id="single-post" class="text-center card jumbotron p-3 p-md-5 bg-success rounded">
+  <h2 class="page-header display-2"id="title">{{title}}</h2>
+  <p class = "card-body display-6" id="desc">{{post_contents}}</p>
+  <p>Created by {{user.name}} on {{format_date post.date_created}}</p>  
+  {{#each comments as |comment|}} 
+    <p>{{comment.contents}}</p>
+  {{/each}}
+  <!-- Add a new comment -->
+  <form class="add-comment" action="/api/comments"  method="POST" data-postid={{id}}</form>
+    <div class="form-group">
+      <label for="comment">Add a Comment</label>
+      <textarea class="form-control" name="comment-body" id="comment-body" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary" id="comm-butt">Submit</button>
+</div>
+<script src="/js/comment.js"></script>
