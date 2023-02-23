@@ -1,10 +1,10 @@
-{{each posts as |post|}} 
+{{#each posts as |Post|}} 
 
     <div class="row mb-4 project"> 
         <div class="col-md-5"> 
             <div class="col-8">
                 <h2>
-                    <a class="text-uppercase" href="/post/{{post.id}}">{{post.title}}</a>
+                    <a class="text-uppercase" href="/post/{{Post.id}}">{{Post.title}}</a>
                 </h2>
             </div> 
 
@@ -12,14 +12,14 @@
 
         <div class="col-4">
             <p class="text-right">Created by
-            {{post.user.username}}
+            {{Post.user.name}}
             on
-            {{format_date post.date_created}}
+            {{format_date Post.date_created}}
             </p>
         </div> 
         <div class="container">
             <p class="text-center">
-                {{post.description}}
+                {{Post.post_content}}
             </p>
         </div>
 
@@ -28,4 +28,5 @@
 
 
 
-    </div>
+    </div> 
+{{/each}}

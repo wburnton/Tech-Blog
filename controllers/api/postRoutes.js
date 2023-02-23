@@ -1,13 +1,16 @@
 const router = require("express").Router(); 
 const {User, Post, Comment} = require("../../models"); 
+const sequelize = require("../../config/connection");
 const withAuth = require("../../utils/auth");  
 
 router.get("/", async (req, res) => {
     try { 
         const postData = await Post.findAll({ 
-            include: {models:User, models:Comment}
+          attributes: ["id", "title", "post_content", "user_id"],
+            include: [{model:User, attributes: ["name"],},], 
+           
         }) 
-        
+        res.status(200).json(postData);
     } catch (err) { 
         res.status(500).json(err)
     }
@@ -37,7 +40,7 @@ router.get("/:id", async (req,res) => {
             res.status(404).json({ message: "No review found with this id"});
             return;
         } else { 
-            res.json(postData);
+            res.status(200).json(postData);
         }
 
         
@@ -47,16 +50,15 @@ router.get("/:id", async (req,res) => {
     }
 });
 
-router.post("/", async (req, res) => { 
+router.post("/", withAuth, async (req, res) => { 
     try { 
         if(!req.session.user) { 
             return req.status(400).json({message: "Please login!"})
         } 
 
         const postData = await Post.create({ 
-            title: req.body.title, 
-            post_content: req.body.post_content, 
-            user_id: req.session.user.id, 
+            ...req.body, 
+            user_id: req.session.user_id, 
         }) 
 
         res.status(200).json(postData)
@@ -64,7 +66,7 @@ router.post("/", async (req, res) => {
 
     } catch (err) { 
         console.log(err);
-        res.status(500).json(err);
+        res.status(400).json(err);
     }
 }); 
 
